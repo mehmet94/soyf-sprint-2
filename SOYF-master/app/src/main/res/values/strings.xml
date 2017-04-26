@@ -2,6 +2,10 @@
     <string name="app_name">SOYF1.0</string>
     <string name="title_activity_setting">Setting</string>
 
+
+
+    <string name="facebook_app_id">303388613423826</string>
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

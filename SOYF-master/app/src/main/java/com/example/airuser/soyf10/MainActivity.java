@@ -14,6 +14,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import com.facebook.*;
+import com.facebook.Profile;
+
+import org.json.JSONObject;
+
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +30,39 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent fromLogin = getIntent();
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        Profile profile = Profile.getCurrentProfile();
+
+
+        /*new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/{user-id}",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        textView.setText("Greetings, " + response);
+
+                    }
+                }
+        ).executeAsync();*/
+        //textView.setText("Greetings, "+ Profile.getCurrentProfile().getFirstName());
+        /*GraphRequest request = GraphRequest.newMeRequest(
+                accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        // Application code
+                    }
+                });*/
+        Bundle parameters = new Bundle();
+        //parameters.putString("fields", "id,name,link");
+        //request.setParameters(parameters);
+        //request.executeAsync();
+        //String facebookID = fromLogin.getStringExtra("facebookID");
         Intent intent = new Intent(this, StepCounterService.class);
         startService(intent);
         SharedPreferences settings = getSharedPreferences("Pref_data", 0);
@@ -58,7 +96,16 @@ public class MainActivity extends AppCompatActivity {
         int total = settings.getInt("totalSteps", -1);
         int daily = settings.getInt("totalSteps", -1);
         textView = (TextView) findViewById(R.id.textView);
+
+
         textView2 = (TextView) findViewById(R.id.textView2);
+        if(fromLogin.getBooleanExtra("registration",false))
+        {
+            textView2.setText("Registration successful. Welcome to Step On Your Friends, "+ profile.getName());
+        }
+        else{
+            textView2.setText("Welcome back to Step On Your Friends, "+ profile.getName());
+        }
 
         textView.setText("Total steps: " + total +" Daily steps: " + daily);
 
