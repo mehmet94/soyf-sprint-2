@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         ShareLinkContent content = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse("http://cecs492.weebly.com/"))
                 .setContentDescription("Step On Your Friends")
-                .setContentTitle("I've take a total of " + total +" steps since i downloaded the app.")
+                .setContentTitle("I've take a total of " + total +" steps since I downloaded the app.")
                 .build();
         fbShare.setShareContent(content);
 
