@@ -2,15 +2,10 @@ package com.example.airuser.soyf10;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,9 +25,6 @@ import com.facebook.login.widget.LoginButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class Login extends AppCompatActivity{
     Button bLogin;
@@ -204,22 +196,9 @@ public class Login extends AppCompatActivity{
             }
 
         });*/
-        try{
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.example.airuser.soyf10", PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
 
 
-
-            tvRegisterLink= (TextView) findViewById(R.id.tvRegisterLink);
+        tvRegisterLink= (TextView) findViewById(R.id.tvRegisterLink);
 
         tvRegisterLink.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){

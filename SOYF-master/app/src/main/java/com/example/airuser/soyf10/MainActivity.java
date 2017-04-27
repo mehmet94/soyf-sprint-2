@@ -1,5 +1,6 @@
 package com.example.airuser.soyf10;
 
+import android.net.Uri;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.hardware.SensorManager;
 
 import com.facebook.*;
 import com.facebook.Profile;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 
 import org.json.JSONObject;
 
@@ -24,6 +27,7 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private TextView textView2;
+    private ShareButton fbShare;
 
     SharedPreferences.Editor editor;
     @Override
@@ -93,9 +97,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        int total = settings.getInt("totalSteps", -1);
-        int daily = settings.getInt("totalSteps", -1);
+
+        int total = settings.getInt("totalSteps", 0);
+        int daily = settings.getInt("totalSteps", 0);
         textView = (TextView) findViewById(R.id.textView);
+
+        fbShare = (ShareButton) findViewById(R.id.fbShare);
+        ShareLinkContent content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("http://cecs492.weebly.com/"))
+                .setContentDescription("Step On Your Friends")
+                .setContentTitle("I've take a total of " + total +" steps since i downloaded the app.")
+                .build();
+        fbShare.setShareContent(content);
 
 
         textView2 = (TextView) findViewById(R.id.textView2);
