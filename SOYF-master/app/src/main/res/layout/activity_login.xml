@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="550dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/water"
+                android:src="@drawable/main"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
@@ -69,7 +69,7 @@
                     android:layout_alignStart="@+id/fbLogin"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="26dp"
-                    android:text=""
+                    android:text="Register with Facebook"
                     android:textStyle="bold" />
 
 
@@ -89,10 +89,10 @@
                 android:id="@+id/imageView1"
                 android:layout_width="500dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="78dp"
+                android:layout_marginTop="23dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/step"
-                android:layout_below="@+id/toolbar2"
+                android:layout_below="@+id/linearLayout2"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
