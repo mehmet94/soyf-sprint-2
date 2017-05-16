@@ -48,6 +48,24 @@
                 android:layout_alignStart="@+id/textView"
                 android:layout_marginBottom="10dp"
                 android:text="Step On Your Friends" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView"
+                    android:layout_alignLeft="@+id/textView"
+                    android:layout_alignStart="@+id/textView"
+                    android:layout_marginBottom="10dp"
+                    android:text="Distance" />
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/textView"
+                    android:layout_alignLeft="@+id/textView"
+                    android:layout_alignStart="@+id/textView"
+                    android:layout_marginBottom="10dp"
+                    android:text="Calories" />
 
                 <com.facebook.share.widget.ShareButton
                     android:id="@+id/fbShare"

@@ -44,6 +44,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     EditText firstname;
     EditText lastname;
     EditText age;
+    EditText gender;
+    EditText height;
+    EditText weight;
     Switch privacy;
     SharedPreferences settings;
     boolean checked;
@@ -56,6 +59,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         String fname = settings.getString("firstname", "");
         String lname = settings.getString("lastname", "");
         String savedAge = settings.getString("age", "");
+        String savedGender = settings.getString("gender", "");
+        String savedHeight = settings.getString("height", "");
+        String savedWeight = settings.getString("weight", "");
         checked = settings.getBoolean("privacy", false);
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
@@ -64,12 +70,18 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         firstname = (EditText) findViewById(R.id.firstname);
         lastname = (EditText) findViewById(R.id.lastname);
         age = (EditText) findViewById(R.id.age);
+        gender = (EditText) findViewById(R.id.gender);
+        height = (EditText) findViewById(R.id.height);
+        weight = (EditText) findViewById(R.id.weight);
         privacy = (Switch) findViewById(R.id.switch2);
 
         username.setText(bio);
         firstname.setText(fname);
         lastname.setText(lname);
         age.setText(savedAge);
+        gender.setText(savedGender);
+        height.setText(savedHeight);
+        weight.setText(savedWeight);
         privacy.setChecked(checked);
 
         imageToUpload.setOnClickListener(this);
@@ -95,6 +107,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     editor.putString("firstname", firstname.getText().toString());
                     editor.putString("lastname", lastname.getText().toString());
                     editor.putString("age", age.getText().toString());
+                    editor.putString("gender", gender.getText().toString());
+                    editor.putString("height", height.getText().toString());
+                    editor.putString("weight", weight.getText().toString());
                     editor.putBoolean("privacy", checked);
                     editor.commit();
             }

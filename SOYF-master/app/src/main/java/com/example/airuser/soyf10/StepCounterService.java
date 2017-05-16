@@ -53,8 +53,8 @@ public class StepCounterService extends Service implements SensorEventListener {
 
         if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
             SharedPreferences settings = getSharedPreferences("Pref_data", 0);
-            int total = settings.getInt("totalSteps", -1);
-            int daily = settings.getInt("dailySteps", -1);
+            int total = settings.getInt("totalSteps", 0);
+            int daily = settings.getInt("dailySteps", 0);
 
 
 
