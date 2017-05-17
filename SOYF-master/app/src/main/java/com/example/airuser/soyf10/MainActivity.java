@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -18,7 +17,6 @@ import android.hardware.SensorManager;
 
 import com.facebook.*;
 import com.facebook.Profile;
-import com.facebook.login.widget.ProfilePictureView;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
 
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Intent fromLogin = getIntent();
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         Profile profile = Profile.getCurrentProfile();
+
 
         /*new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
@@ -75,6 +74,17 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences("Pref_data", 0);
         editor = settings.edit();
 
+        Calendar calendar = Calendar.getInstance();
+        int day = settings.getInt("dayOfYear", 0);
+        int year = settings.getInt("year", 0);
+        if(calendar.get(Calendar.DAY_OF_YEAR) != day || calendar.get(Calendar.YEAR) != year){
+            editor.putInt("dailyStep", 0);
+        }
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("dayOfYear", calendar.get(Calendar.DAY_OF_YEAR));
+        editor.putInt("year", calendar.get(Calendar.YEAR));
+        editor.commit();
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -111,21 +121,14 @@ public class MainActivity extends AppCompatActivity {
 
         //Distance in Kilometers
         textView3 = (TextView) findViewById(R.id.textView3);
+        float distance = (float)((daily)*(height*0.414))/(float)100000; //measurements have to be in cm
+        textView3.setText("Daily Distance: " + distance);
 
-        /*
-        if(gender=="male"){
-            float distance = (float)((daily)*(height*0.415))/(float)100000; //measurements have to be in cm
-            textView3.setText("Daily Distance: " + distance);
-        }else if(gender=="female"){
-            float distance = (float)((daily)*(height*0.413))/(float)100000; //measurements have to be in cm
-            textView3.setText("Daily Distance: " + distance);
-        }
-        */
         textView4 = (TextView) findViewById(R.id.textView4);
-        //double caloriesBurnedPerMile = weight * 0.57;
-        //double conversionFactor = caloriesBurnedPerMile / 2200; //2200 is the amount of steps that has been assumed to take in a mile
-        //double caloriesBurned = daily * conversionFactor; // amount of calories burned with the number of steps has been taken in daily pedometer
-        //textView4.setText("Burned Calories: " + caloriesBurned);
+        double caloriesBurnedPerMile = weight * 0.57;
+        double conversionFactor = caloriesBurnedPerMile / 2200; //2200 is the amount of steps that has been assumed to take in a mile
+        double caloriesBurned = daily * conversionFactor; // amount of calories burned with the number of steps has been taken in daily pedometer
+        textView4.setText("Burned Calories: " + caloriesBurned);
 
         textView2 = (TextView) findViewById(R.id.textView2);
         if(fromLogin.getBooleanExtra("registration",false))
