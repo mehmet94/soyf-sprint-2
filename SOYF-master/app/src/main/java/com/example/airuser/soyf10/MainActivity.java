@@ -121,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Distance in Kilometers
         textView3 = (TextView) findViewById(R.id.textView3);
-        float distance = (float)((daily)*(height*0.414))/(float)100000; //measurements have to be in cm
+        float distance = (float)((daily)*(settings.getInt("height", 0)*0.414))/(float)100000; //0.414 cm = 0.0135 feet 6.2 (constant number to calulate stride length)
         textView3.setText("Daily Distance: " + distance);
 
         textView4 = (TextView) findViewById(R.id.textView4);
-        double caloriesBurnedPerMile = weight * 0.57;
+        double caloriesBurnedPerMile = (settings.getInt("weight", 0)) * 0.57;
         double conversionFactor = caloriesBurnedPerMile / 2200; //2200 is the amount of steps that has been assumed to take in a mile
         double caloriesBurned = daily * conversionFactor; // amount of calories burned with the number of steps has been taken in daily pedometer
         textView4.setText("Burned Calories: " + caloriesBurned);
