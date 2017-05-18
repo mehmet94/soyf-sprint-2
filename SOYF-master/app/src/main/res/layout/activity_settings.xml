@@ -41,9 +41,9 @@
                 android:id="@+id/unlink" />
 
             <com.facebook.login.widget.LoginButton
+                android:id="@+id/fbLogout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/fbLogin" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>

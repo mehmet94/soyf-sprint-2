@@ -11,6 +11,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.content.Intent;
 
@@ -121,7 +122,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                         weightInt = Integer.parseInt(savedWeight);
                     }catch(Exception e){
                         Toast toast= Toast.makeText(getApplication(),"Invalid Input", Toast.LENGTH_SHORT);
-                        toast.setMargin(50,50);
                         toast.show();
                     }
                     editor.putString("username", username.getText().toString());

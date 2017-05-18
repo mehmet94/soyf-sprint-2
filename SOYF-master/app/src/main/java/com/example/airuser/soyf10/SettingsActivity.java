@@ -42,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
 
        // LoginManager.getInstance().logOut();
 
-        login = (LoginButton) findViewById(R.id.fbLogin);
+        login = (LoginButton) findViewById(R.id.fbLogout);
 
         login.registerCallback(cbManager, new FacebookCallback<LoginResult>() {
             @Override

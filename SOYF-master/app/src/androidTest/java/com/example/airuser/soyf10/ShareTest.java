@@ -1,5 +1,8 @@
 package com.example.airuser.soyf10;
 
+/**
+ * Created by Adrian on 5/18/2017.
+ */
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.action.ViewActions;
@@ -27,7 +30,7 @@ import static org.hamcrest.Matchers.not;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class ShareTest {
     @Rule
     public ActivityTestRule testRule = new ActivityTestRule(Login.class);
 
@@ -37,17 +40,8 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.example.airuser.soyf10", appContext.getPackageName());
-                onView(withId(R.id.fbLogin))            // withId(R.id.my_view) is a ViewMatcher
+        onView(withId(R.id.fbLogin))            // withId(R.id.my_view) is a ViewMatcher
                 .perform(click());// click() is a ViewAction
 
-                onView(withId(R.id.button))
-                .perform(click());
-
-                onView(withId(R.id.fbLogout))
-                .perform(click());
-
-        onView(ViewMatchers.withId(16908313))
-                .inRoot(RootMatchers.isDialog())
-                .perform(ViewActions.click());
     }
 }
