@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -54,11 +54,23 @@
                     android:id="@+id/fbLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/tvRegisterLink"
+                    android:layout_above="@+id/login1"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"
                     android:text="  connect_with_facebook" />
+
+                <TextView
+                    android:id="@+id/login1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/fbLogin"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@+id/fbLogin"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:text="Login"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvRegisterLink"
@@ -69,7 +81,7 @@
                     android:layout_alignStart="@+id/fbLogin"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="26dp"
-                    android:text="Register with Facebook"
+                    android:text="Register"
                     android:textStyle="bold" />
 
 
@@ -101,4 +113,4 @@
 
     </android.support.design.widget.AppBarLayout>
 
- </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>

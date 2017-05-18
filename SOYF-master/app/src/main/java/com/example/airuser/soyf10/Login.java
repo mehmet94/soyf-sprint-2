@@ -26,16 +26,17 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Login extends AppCompatActivity{
+public class Login extends AppCompatActivity {
     Button bLogin;
     LoginButton login;
     CallbackManager cbManager;
     LoginButton register;
     String facebookID;
-
+    TextView loginButton;
     EditText etUsername, etPassword;
     TextView tvRegisterLink;
     UserLocalStore userLocalStore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,75 +49,30 @@ public class Login extends AppCompatActivity{
         login.registerCallback(cbManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                tvRegisterLink.setText("It seems like you have not registered yet. Click here to register.");
+                tvRegisterLink.setText("You have not registered with Facebook yet. Click here to register.");
                 String userID = loginResult.getAccessToken().getUserId();
                 facebookID = loginResult.getAccessToken().getUserId();
                 final AccessToken accessToken = loginResult.getAccessToken();
 
-                Response.Listener<String> responseListener = new Response.Listener<String>(){
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
-                                //String name = jsonResponse.getString("name");
-                                //int age = jsonResponse.getInt("age");
+                                tvRegisterLink.setText("Success!.");
                                 facebookID = jsonResponse.getString("facebookID");
-
-
-
-
                                 Intent intent = new Intent(Login.this, MainActivity.class);
                                 intent.putExtra("facebookID", facebookID);
                                 intent.putExtra("accessToken", accessToken);
-
-                                //intent.putExtra("name", name);
-                                //intent.putExtra("age", age);
-
+                                intent.putExtra("fb", true);
                                 Login.this.startActivity(intent);
                             } else {
-
-                                facebookID = jsonResponse.getString("facebookID");
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                                builder.setMessage("Login failed. Try to register instead?")
-                                        /*.setPositiveButton("Register", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                                                    @Override
-                                                    public void onResponse(String response) {
-                                                        try {
-                                                            JSONObject jsonResponse = new JSONObject(response);
-                                                            boolean success = jsonResponse.getBoolean("success");
-
-                                                            if (success) {
-
-
-                                                                Intent intent = new Intent(Login.this, MainActivity.class);
-                                                                intent.putExtra("facebookID",facebookID);
-                                                                Login.this.startActivity(intent);
-                                                            } else {
-                                                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                                                                builder.setMessage("Register Failed")
-                                                                        .setNegativeButton("Retry", null)
-                                                                        .create()
-                                                                        .show();
-                                                            }
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                };
-                                                FacebookRegisterRequest registerRequest = new FacebookRegisterRequest(facebookID, responseListener);
-                                                RequestQueue queue = Volley.newRequestQueue(Login.this);
-                                                queue.add(registerRequest);
-                                            }
-                                        })*/
-                                        .setNegativeButton("Retry", null)
-                                        .create()
-                                        .show();
+                                tvRegisterLink.setText("Not!.");
+                                //facebookID = jsonResponse.getString("facebookID");
+                                Intent intent = new Intent(Login.this, FacebookRegister.class);
+                                Login.this.startActivity(intent);
                             }
 
                         } catch (JSONException e) {
@@ -126,7 +82,7 @@ public class Login extends AppCompatActivity{
                     }
                 };
 
-                FacebookLoginRequest facebookLoginRequest  = new FacebookLoginRequest(userID, responseListener);
+                FacebookLoginRequest facebookLoginRequest = new FacebookLoginRequest(userID, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(Login.this);
                 queue.add(facebookLoginRequest);
             }
@@ -145,151 +101,43 @@ public class Login extends AppCompatActivity{
 
 
         });
-        /*register = (LoginButton) findViewById(R.id.fbRegister);
-
-        register.registerCallback(cbManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-                String userID = loginResult.getAccessToken().getUserId();
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-
-                            if (success) {
-                                String facebookID = jsonResponse.getString("facebookID");
-                                Intent intent = new Intent(Login.this, MainActivity.class);
-                                intent.putExtra("facebookID", facebookID);
-                                Login.this.startActivity(intent);
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                                builder.setMessage("Register Failed")
-                                        .setNegativeButton("Retry", null)
-                                        .create()
-                                        .show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                };
-
-                FacebookRegisterRequest registerRequest = new FacebookRegisterRequest(userID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(Login.this);
-                queue.add(registerRequest);
-
-                //User user = new User(name,age,username,password);
-
-                //registerUser(user);
-            }
-            @Override
-            public void onCancel() {
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-
-        });*/
 
 
-        tvRegisterLink= (TextView) findViewById(R.id.tvRegisterLink);
+        tvRegisterLink = (TextView) findViewById(R.id.tvRegisterLink);
 
-        tvRegisterLink.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                /*Intent registerIntent = new Intent(Login.this, Register.class);
-                registerIntent.putExtra("facebookID", facebookID);
-                Login.this.startActivity(registerIntent);*/
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-
-                            if (success) {
-                                Intent intent = new Intent(Login.this, MainActivity.class);
-                                intent.putExtra("facebookID",facebookID);
-                                intent.putExtra("registration", true);
-                                Login.this.startActivity(intent);
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                                builder.setMessage("Register Failed")
-                                        .setNegativeButton("Retry", null)
-                                        .create()
-                                        .show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                };
-
-                FacebookRegisterRequest registerRequest = new FacebookRegisterRequest(facebookID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(Login.this);
-                queue.add(registerRequest);
+        tvRegisterLink.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (facebookID != null) {
+                    Intent intent = new Intent(Login.this, FacebookRegister.class);
+                    Login.this.startActivity(intent);
+                } else {
+                    Intent intent = new Intent(Login.this, Register.class);
+                    Login.this.startActivity(intent);
+                }
             }
         });
-        /*bLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
+
+        loginButton = (TextView) findViewById(R.id.login1);
+        loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                final String username = etUsername.getText().toString();
-                final String password = etPassword.getText().toString();
+                Intent intent = new Intent(Login.this, LoginPage.class);
+                Login.this.startActivity(intent);
+                }
 
-                // Response received from the server
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonResponse = new JSONObject(response);
-                            boolean success = jsonResponse.getBoolean("success");
-
-                            if (success) {
-                                String name = jsonResponse.getString("name");
-                                int age = jsonResponse.getInt("age");
-
-                                Intent intent = new Intent(Login.this, MainActivity.class);
-                                intent.putExtra("name", name);
-                                intent.putExtra("age", age);
-                                intent.putExtra("username", username);
-                                Login.this.startActivity(intent);
-                            } else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
-                                builder.setMessage("Login Failed")
-                                        .setNegativeButton("Retry", null)
-                                        .create()
-                                        .show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-
-                LoginRequest loginRequest = new LoginRequest(username, password, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(Login.this);
-                queue.add(loginRequest);
-            }
-        });*/
-
-
+        });
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        cbManager.onActivityResult(requestCode, resultCode,data);
+        cbManager.onActivityResult(requestCode, resultCode, data);
     }
 
+}
     //userLocalStore = new UserLocalStore(this);
 
 
 
-}
+
+
 
 
     /*public void onClick(View v) {

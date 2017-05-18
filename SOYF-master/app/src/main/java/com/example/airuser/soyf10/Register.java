@@ -21,14 +21,13 @@ import org.json.JSONObject;
 
 public class Register extends AppCompatActivity{
     Button bRegister;
-    EditText etName, etAge,etUsername, etPassword;
+    EditText etName, etUsername, etPassword;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         etName = (EditText) findViewById(R.id.etName);
-        etAge = (EditText) findViewById(R.id.etAge);
         etUsername = (EditText) findViewById(R.id.etUsername);
         etPassword = (EditText) findViewById(R.id.etPassword);
         bRegister = (Button) findViewById(R.id.bRegister);
@@ -37,7 +36,6 @@ public class Register extends AppCompatActivity{
             public void onClick(View v) {
 
                 String name = etName.getText().toString();
-                int age = Integer.parseInt(etAge.getText().toString());
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 
@@ -65,7 +63,7 @@ public class Register extends AppCompatActivity{
 
                 };
 
-                RegisterRequest registerRequest = new RegisterRequest(name, username, age, password, responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(name, username, password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(Register.this);
                 queue.add(registerRequest);
 

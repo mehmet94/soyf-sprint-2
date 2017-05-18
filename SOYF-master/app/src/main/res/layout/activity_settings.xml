@@ -34,6 +34,12 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/profilesButton" />
 
+            <Button
+                android:text="Unlink from Facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/unlink" />
+
             <com.facebook.login.widget.LoginButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
