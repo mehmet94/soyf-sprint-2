@@ -6,9 +6,16 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.text.format.DateFormat;
 import android.widget.RemoteViews;
 
+import java.util.Calendar;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import java.util.logging.LogRecord;
 
 /**
  * Implementation of App Widget functionality.
@@ -17,53 +24,43 @@ public class AppWidget extends AppWidgetProvider {
     SharedPreferences settings;
     int total;
     int daily;
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
+    Handler handler;
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(Context context, final AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        //settings = context.getSharedPreferences("Pref_data", 0);
-        //total = settings.getInt("totalSteps", 0);
 
         final int N = appWidgetIds.length;
         settings = context.getSharedPreferences("Pref_data", 0);
         total = settings.getInt("totalSteps", 0);
         daily = settings.getInt("dailySteps", 0);
 
-        // Perform this loop procedure for each App Widget that belongs to this provider
-        for (int i=0; i<N; i++) {
-            int appWidgetId = appWidgetIds[i];
-            String number = String.format("%03d", (new Random().nextInt(900) + 100));
+        for (int i = 0; i < N; i++) {
+            final int appWidgetId = appWidgetIds[i];
 
-            // Get the layout for the App Widget and attach an on-click listener
-            // to the button
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
-            Intent updateIntent = new Intent();
-            updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                    context, 0, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            Intent clockIntent = new Intent(context, AppWidget.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, clockIntent, 0);
 
-            views.setOnClickPendingIntent(R.id.update, pendingIntent);
-            views.setTextViewText(R.id.total, "Total steps: " + number);
-            views.setTextViewText(R.id.daily, "Steps taken today: " + daily);
+            final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.app_widget);
+            //views.setOnClickPendingIntent(R.id.update, pendingIntent);
 
-            Intent intent = new Intent(context, AppWidget.class);
-            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-            PendingIntent pendingItent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            views.setOnClickPendingIntent(R.id.update, pendingIntent);
+            final Handler mHandler = new Handler();
+            Runnable continuousRunnable = new Runnable(){
+                public void run() {
+
+                    total = settings.getInt("totalSteps", 0);
+                    daily = settings.getInt("dailySteps", 0);
+                    views.setTextViewText(R.id.total, "total: "+total);
+                    views.setTextViewText(R.id.daily, "daily: " + daily);
+                    appWidgetManager.updateAppWidget(appWidgetId, views);
+                    mHandler.postDelayed(this, 20000);
+                }
+            };// Update text every second
+            continuousRunnable.run();
             appWidgetManager.updateAppWidget(appWidgetId, views);
-
         }
     }
+
 
 
     @Override

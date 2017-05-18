@@ -51,16 +51,5 @@
         android:textColor="#fff"
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/update"
-        style="@android:style/Widget.Holo.Button.Toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update"
-        android:visibility="visible"
-        android:layout_alignBaseline="@+id/daily"
-        android:layout_alignBottom="@+id/daily"
-        android:layout_centerHorizontal="true" />
-
 
 </RelativeLayout>
