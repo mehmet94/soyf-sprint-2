@@ -73,8 +73,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         weightInt = settings.getInt("weight", 0);
         checked = settings.getBoolean("privacy", false);
 
-
-
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         bUploadImage = (Button) findViewById(R.id.bUploadImage);
         username = (EditText) findViewById(R.id.username);
@@ -89,10 +87,10 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         username.setText(bio);
         firstname.setText(fname);
         lastname.setText(lname);
-        age.setText(ageInt);
+        age.setText(Integer.toString(ageInt));
         gender.setText(savedGender);
-        height.setText(heightInt);
-        weight.setText(weightInt);
+        height.setText(Integer.toString(heightInt));
+        weight.setText(Integer.toString(weightInt));
         privacy.setChecked(checked);
 
         imageToUpload.setOnClickListener(this);
