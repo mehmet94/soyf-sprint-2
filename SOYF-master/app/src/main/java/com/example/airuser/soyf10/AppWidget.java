@@ -53,7 +53,7 @@ public class AppWidget extends AppWidgetProvider {
                     views.setTextViewText(R.id.total, "total: "+total);
                     views.setTextViewText(R.id.daily, "daily: " + daily);
                     appWidgetManager.updateAppWidget(appWidgetId, views);
-                    mHandler.postDelayed(this, 20000);
+                    mHandler.postDelayed(this, 10000);
                 }
             };// Update text every second
             continuousRunnable.run();

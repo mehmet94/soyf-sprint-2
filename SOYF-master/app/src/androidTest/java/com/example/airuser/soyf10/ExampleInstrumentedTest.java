@@ -43,11 +43,8 @@ public class ExampleInstrumentedTest {
                 onView(withId(R.id.button))
                 .perform(click());
 
-                onView(withId(R.id.fbLogout))
+                onView(withId(R.id.logout))
                 .perform(click());
 
-        onView(ViewMatchers.withId(16908313))
-                .inRoot(RootMatchers.isDialog())
-                .perform(ViewActions.click());
     }
 }

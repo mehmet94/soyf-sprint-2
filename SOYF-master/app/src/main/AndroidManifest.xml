@@ -31,23 +31,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SettingsActivity" android:screenOrientation="portrait"/>
         <activity
             android:name=".Tutorial"
             android:label="@string/title_activity_tutorial"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Profile"
             android:label="Profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".StepCounterService" />
 
-        <activity android:name=".ProfilesList" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Register" />
-        <activity android:name=".FacebookRegister" />
-        <activity android:name=".LoginPage" />
+        <activity android:name=".ProfilesList"  android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Register" android:screenOrientation="portrait"/>
+        <activity android:name=".FacebookRegister" android:screenOrientation="portrait"/>
+        <activity android:name=".LoginPage" android:screenOrientation="portrait"/>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"

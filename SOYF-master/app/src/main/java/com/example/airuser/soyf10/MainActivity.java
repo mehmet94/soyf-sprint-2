@@ -1,6 +1,7 @@
 package com.example.airuser.soyf10;
 
 import android.net.Uri;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.content.Context;
 
 import com.facebook.*;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
 
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         */
 
         int total = settings.getInt("totalSteps", 0);
-        int daily = settings.getInt("totalSteps", 0);
+        int daily = settings.getInt("dailySteps", 0);
         textView = (TextView) findViewById(R.id.textView);
 
         fbShare = (ShareButton) findViewById(R.id.fbShare);
@@ -105,19 +107,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         textView.setText("Total steps: " + total +" Daily steps: " + daily);
+        final Handler mHandler = new Handler();
+        Runnable continuousRunnable = new Runnable(){
+            public void run() {
 
+                SharedPreferences settings = getSharedPreferences("Pref_data", 0);
+                int totalUpdate = settings.getInt("totalSteps", 0);
+                int dailyUpdate = settings.getInt("dailySteps", 0);
+                textView.setText("Total steps: " + totalUpdate +" Daily steps: " + dailyUpdate);
+                mHandler.postDelayed(this, 10000);
+            }
+        };// Update text every second
+        continuousRunnable.run();
 
     }
 
-
-
-
-
-    protected void onStop() {
-        super.onStop();
-
-
-    }
 
     private void goToSettingsActivity(boolean fbLogged) {
         Intent intent = new Intent(this, SettingsActivity.class);

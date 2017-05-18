@@ -40,10 +40,11 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/unlink" />
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/fbLogout"
+            <Button
+                android:text="Logout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/logout" />
 
         </LinearLayout>
     </ScrollView>

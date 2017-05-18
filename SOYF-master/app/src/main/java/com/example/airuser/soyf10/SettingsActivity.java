@@ -42,24 +42,15 @@ public class SettingsActivity extends AppCompatActivity {
 
        // LoginManager.getInstance().logOut();
 
-        login = (LoginButton) findViewById(R.id.fbLogout);
-
-        login.registerCallback(cbManager, new FacebookCallback<LoginResult>() {
+        Button logout = (Button) findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onClick(View v) {
+
                 Intent intent = new Intent(SettingsActivity.this, Login.class);
-                SettingsActivity.this.startActivity(intent);
-
+                LoginManager.getInstance().logOut();
+                startActivity(intent);
             }
-                    public void onCancel() {
-
-                    }
-
-
-                    @Override
-                    public void onError(FacebookException error) {
-
-                    }
         });
 
         profiles.setOnClickListener(new View.OnClickListener(){
