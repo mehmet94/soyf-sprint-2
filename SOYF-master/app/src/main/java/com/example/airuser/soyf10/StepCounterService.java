@@ -22,10 +22,15 @@ import org.json.JSONObject;
 
 import com.facebook.Profile;
 
+import java.util.Calendar;
+
 public class StepCounterService extends Service implements SensorEventListener {
 
     private SensorManager mSensorManager;
     private Sensor mStepDetectorSensor;
+    private Calendar calendar;
+    private SharedPreferences settings;
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
@@ -34,7 +39,7 @@ public class StepCounterService extends Service implements SensorEventListener {
         mStepDetectorSensor = mSensorManager
                 .getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         mSensorManager.registerListener(this, mStepDetectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
-
+        settings = getSharedPreferences("Pref_data", 0);
         return START_STICKY;
     }
 
@@ -46,15 +51,24 @@ public class StepCounterService extends Service implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        calendar = Calendar.getInstance();
+        int today = calendar.get(Calendar.DAY_OF_YEAR);
+        int dayOfYear = settings.getInt("dayOfYear",0);
+        if(dayOfYear != today){
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt("dailySteps", 0);
+            editor.putInt("dayOfYear",today);
+            editor.commit();
+        }
         Sensor sensor = event.sensor;
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         Profile profile = Profile.getCurrentProfile();
         String facebookID = accessToken.getUserId();
 
         if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            SharedPreferences settings = getSharedPreferences("Pref_data", 0);
-            int total = settings.getInt("totalSteps", -1);
-            int daily = settings.getInt("dailySteps", -1);
+
+            int total = settings.getInt("totalSteps", 0);
+            int daily = settings.getInt("dailySteps", 0);
 
 
 

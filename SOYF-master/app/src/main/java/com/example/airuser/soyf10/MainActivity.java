@@ -53,17 +53,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences("Pref_data", 0);
         editor = settings.edit();
 
-        Calendar calendar = Calendar.getInstance();
-        int day = settings.getInt("dayOfYear", 0);
-        int year = settings.getInt("year", 0);
-        if(calendar.get(Calendar.DAY_OF_YEAR) != day || calendar.get(Calendar.YEAR) != year){
-            editor.putInt("dailyStep", 0);
-        }
-
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("dayOfYear", calendar.get(Calendar.DAY_OF_YEAR));
-        editor.putInt("year", calendar.get(Calendar.YEAR));
-        editor.commit();
 
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
