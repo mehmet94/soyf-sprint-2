@@ -27,6 +27,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,6 +49,14 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     EditText height;
     EditText weight;
     Switch privacy;
+
+    int heightInt;
+    int weightInt;
+    int ageInt;
+
+    String savedAge;
+    String savedHeight;
+    String savedWeight;
     SharedPreferences settings;
     boolean checked;
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +67,13 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         String bio = settings.getString("username","");
         String fname = settings.getString("firstname", "");
         String lname = settings.getString("lastname", "");
-        String savedAge = settings.getString("age", "");
+        ageInt = settings.getInt("age", 0);
         String savedGender = settings.getString("gender", "");
-        String savedHeight = settings.getString("height", "");
-        String savedWeight = settings.getString("weight", "");
+        heightInt = settings.getInt("height", 0);
+        weightInt = settings.getInt("weight", 0);
         checked = settings.getBoolean("privacy", false);
+
+
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         bUploadImage = (Button) findViewById(R.id.bUploadImage);
@@ -78,10 +89,10 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         username.setText(bio);
         firstname.setText(fname);
         lastname.setText(lname);
-        age.setText(savedAge);
+        age.setText(ageInt);
         gender.setText(savedGender);
-        height.setText(savedHeight);
-        weight.setText(savedWeight);
+        height.setText(heightInt);
+        weight.setText(weightInt);
         privacy.setChecked(checked);
 
         imageToUpload.setOnClickListener(this);
@@ -103,13 +114,25 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     break;
                 case R.id.bUploadImage:
                     SharedPreferences.Editor editor = settings.edit();
+                    savedHeight = height.getText().toString();
+                    savedAge = age.getText().toString();
+                    savedWeight = weight.getText().toString();
+                    try {
+                        heightInt = Integer.parseInt(savedHeight);
+                        ageInt = Integer.parseInt(savedAge);
+                        weightInt = Integer.parseInt(savedWeight);
+                    }catch(Exception e){
+                        Toast toast= Toast.makeText(getApplication(),"Invalid Input", Toast.LENGTH_SHORT);
+                        toast.setMargin(50,50);
+                        toast.show();
+                    }
                     editor.putString("username", username.getText().toString());
                     editor.putString("firstname", firstname.getText().toString());
                     editor.putString("lastname", lastname.getText().toString());
-                    editor.putString("age", age.getText().toString());
+                    editor.putInt("age", ageInt);
                     editor.putString("gender", gender.getText().toString());
-                    editor.putString("height", height.getText().toString());
-                    editor.putString("weight", weight.getText().toString());
+                    editor.putInt("height", heightInt);
+                    editor.putInt("weight", weightInt);
                     editor.putBoolean("privacy", checked);
                     editor.commit();
             }

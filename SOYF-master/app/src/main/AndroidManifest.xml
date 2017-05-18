@@ -4,22 +4,19 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <provider
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <provider android:authorities="com.facebook.app.FacebookContentProvider286103538534144"
         android:name="com.facebook.FacebookContentProvider"
-        android:authorities="com.facebook.app.FacebookContentProvider286103538534144"
-        android:exported="true" />
-
+        android:exported="true"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/photo"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
 
         <activity
             android:name=".Login"
@@ -36,39 +33,26 @@
             android:name=".Tutorial"
             android:label="@string/title_activity_tutorial"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".Profile"
             android:label="Profile"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service android:name=".StepCounterService" />
 
-        <activity android:name=".ProfilesList" />
+        <activity android:name=".ProfilesList"></activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".Register" />
+
         <activity android:name=".FacebookRegister" />
         <activity android:name=".LoginPage" />
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+
             android:label="@string/app_name" />
-
-        <receiver android:name="layout.AppWidget">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_info" />
-        </receiver>
-
-        <activity android:name="layout.AppWidgetConfigureActivity">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

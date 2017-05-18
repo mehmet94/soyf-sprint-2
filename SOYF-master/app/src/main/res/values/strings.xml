@@ -3,6 +3,7 @@
     <string name="title_activity_setting">Setting</string>
 
 
+
     <string name="facebook_app_id">303388613423826</string>
 
     <!-- Strings related to Settings -->
@@ -88,7 +89,4 @@ Contact us: cecs492.weebly.com"
     <string name="action_settings">Settings</string>
     <string name="Tutorialtext" />
     <string name="TutorialText" />
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="configure">Configure</string>
-    <string name="add_widget">Add widget</string>
 </resources>
