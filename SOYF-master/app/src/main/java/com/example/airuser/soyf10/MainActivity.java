@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean fbLogged;
 
     SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         fbLogged = false;
         fbLogged = getIntent().getExtras().getBoolean("fb");
-        if(fbLogged)
-        {
+        if (fbLogged) {
             AccessToken accessToken = AccessToken.getCurrentAccessToken();
             profile = Profile.getCurrentProfile();
         }
@@ -85,20 +85,31 @@ public class MainActivity extends AppCompatActivity {
         ShareLinkContent content = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse("http://cecs492.weebly.com/"))
                 .setContentDescription("Step On Your Friends")
-                .setContentTitle("I've take a total of " + total +" steps since i downloaded the app.")
+                .setContentTitle("I've take a total of " + total + " steps since i downloaded the app.")
                 .build();
         fbShare.setShareContent(content);
-
+    /*
         //Distance in Kilometers
         textView3 = (TextView) findViewById(R.id.textView3);
-        float distance = (float)((daily)*(settings.getInt("height", 0)*0.414))/(float)100000; //0.414 cm = 0.0135 feet 6.2 (constant number to calulate stride length)
+        float distance = (float) ((daily) * (settings.getInt("height", 0) * 0.414)) / (float) 100000; //0.414 cm = 0.0135 feet 6.2 (constant number to calulate stride length)
         textView3.setText("Daily Distance: " + distance);
 
         textView4 = (TextView) findViewById(R.id.textView4);
+
+        if(settings.getBoolean("imperial", false)){
         double caloriesBurnedPerMile = (settings.getInt("weight", 0)) * 0.57;
         double conversionFactor = caloriesBurnedPerMile / 2200; //2200 is the amount of steps that has been assumed to take in a mile
         double caloriesBurned = daily * conversionFactor; // amount of calories burned with the number of steps has been taken in daily pedometer
         textView4.setText("Burned Calories: " + caloriesBurned);
+    }else{
+        double weightKg = (settings.getInt("weight", 0)) * .4536;
+        double caloriesBurnedPerKm = weightKg * 0.57;
+        double conversionFactorMet = caloriesBurnedPerKm / 1000; //2200 is the amount of steps that has been assumed to take in a mile
+        double caloriesBurnedMet = daily * conversionFactorMet; // amount of calories burned with the number of steps has been taken in daily pedometer
+            textView4.setText("Burned Calories: " + caloriesBurnedMet);
+    }
+
+*/
 
         textView2 = (TextView) findViewById(R.id.textView2);
         if(fbLogged)
@@ -115,6 +126,27 @@ public class MainActivity extends AppCompatActivity {
                 int totalUpdate = settings.getInt("totalSteps", 0);
                 int dailyUpdate = settings.getInt("dailySteps", 0);
                 textView.setText("Total steps: " + totalUpdate +" Daily steps: " + dailyUpdate);
+
+                //Distance in Kilometers
+                textView3 = (TextView) findViewById(R.id.textView3);
+                float distance = (float) ((dailyUpdate) * (settings.getInt("height", 0) * 0.414)) / (float) 100000; //0.414 cm = 0.0135 feet 6.2 (constant number to calulate stride length)
+                textView3.setText("Daily Distance: " + distance);
+
+                textView4 = (TextView) findViewById(R.id.textView4);
+
+                if(settings.getBoolean("imperial", false)){
+                    double caloriesBurnedPerMile = (settings.getInt("weight", 0)) * 0.57;
+                    double conversionFactor = caloriesBurnedPerMile / 2200; //2200 is the amount of steps that has been assumed to take in a mile
+                    double caloriesBurned = dailyUpdate * conversionFactor; // amount of calories burned with the number of steps has been taken in daily pedometer
+                    textView4.setText("Burned Calories: " + caloriesBurned);
+                }else{
+                    double weightKg = (settings.getInt("weight", 0)) * .4536;
+                    double caloriesBurnedPerKm = weightKg * 0.57;
+                    double conversionFactorMet = caloriesBurnedPerKm / 1000; //2200 is the amount of steps that has been assumed to take in a mile
+                    double caloriesBurnedMet = dailyUpdate * conversionFactorMet; // amount of calories burned with the number of steps has been taken in daily pedometer
+                    textView4.setText("Burned Calories: " + caloriesBurnedMet);
+                }
+
                 mHandler.postDelayed(this, 10000);
             }
         };// Update text every second

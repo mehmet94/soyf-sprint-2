@@ -50,6 +50,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     EditText height;
     EditText weight;
     Switch privacy;
+    Switch imperial;
+
 
     int heightInt;
     int weightInt;
@@ -60,9 +62,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     String savedWeight;
     SharedPreferences settings;
     boolean checked;
+    boolean impChecked;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checked = false;
+        impChecked= false;
         setContentView(R.layout.profile_activity);
         settings = getSharedPreferences("Pref_data", 0);
         String bio = settings.getString("username","");
@@ -73,6 +77,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         heightInt = settings.getInt("height", 0);
         weightInt = settings.getInt("weight", 0);
         checked = settings.getBoolean("privacy", false);
+        impChecked = settings.getBoolean("imperial", false);
+
 
         imageToUpload = (ImageView) findViewById(R.id.imageToUpload);
         bUploadImage = (Button) findViewById(R.id.bUploadImage);
@@ -84,6 +90,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         height = (EditText) findViewById(R.id.height);
         weight = (EditText) findViewById(R.id.weight);
         privacy = (Switch) findViewById(R.id.switch2);
+        imperial = (Switch) findViewById(R.id.switch3);
+
 
         username.setText(bio);
         firstname.setText(fname);
@@ -93,12 +101,19 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         height.setText(Integer.toString(heightInt));
         weight.setText(Integer.toString(weightInt));
         privacy.setChecked(checked);
+        imperial.setChecked(impChecked);
 
         imageToUpload.setOnClickListener(this);
         bUploadImage.setOnClickListener(this);
         privacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton bw, boolean isChecked){
                 checked = isChecked;
+            }
+        });
+
+        imperial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton bw, boolean isChecked){
+                impChecked = isChecked;
             }
         });
 
@@ -132,6 +147,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     editor.putInt("height", heightInt);
                     editor.putInt("weight", weightInt);
                     editor.putBoolean("privacy", checked);
+                    editor.putBoolean("imperial",impChecked);
+
                     editor.commit();
             }
     }
