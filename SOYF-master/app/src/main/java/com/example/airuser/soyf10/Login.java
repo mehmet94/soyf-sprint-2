@@ -46,6 +46,8 @@ public class Login extends AppCompatActivity {
         cbManager = CallbackManager.Factory.create();
         login = (LoginButton) findViewById(R.id.fbLogin);
 
+
+
         login.registerCallback(cbManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -125,6 +127,17 @@ public class Login extends AppCompatActivity {
                 }
 
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(facebookID != null)
+        {
+            Intent intent = new Intent(Login.this, MainActivity.class);
+            intent.putExtra("fb", true);
+            Login.this.startActivity(intent);
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

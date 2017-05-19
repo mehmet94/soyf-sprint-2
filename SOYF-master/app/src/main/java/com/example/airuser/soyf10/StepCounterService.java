@@ -30,7 +30,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     private Sensor mStepDetectorSensor;
     private Calendar calendar;
     private SharedPreferences settings;
-
+    private AccessToken accessToken;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
@@ -61,9 +61,14 @@ public class StepCounterService extends Service implements SensorEventListener {
             editor.commit();
         }
         Sensor sensor = event.sensor;
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        Profile profile = Profile.getCurrentProfile();
-        String facebookID = accessToken.getUserId();
+        if(accessToken != null)
+        {
+            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            Profile profile = Profile.getCurrentProfile();
+            String facebookID = accessToken.getUserId();
+        }
+
+
 
         if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
 
@@ -81,7 +86,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                 }
 
             };
-            StepRequest stepRequest = new StepRequest(total, facebookID, responseListener);
+            StepRequest stepRequest = new StepRequest(total, "flip", responseListener);
             RequestQueue queue = Volley.newRequestQueue(StepCounterService.this);
             queue.add(stepRequest);
 

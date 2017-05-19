@@ -22,7 +22,9 @@ import org.json.JSONObject;
 public class LoginPage extends AppCompatActivity{
     Button bLogin;
     EditText etUsername, etPassword;
+    String username, password;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
@@ -32,8 +34,8 @@ public class LoginPage extends AppCompatActivity{
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
+                username = etUsername.getText().toString();
+                password = etPassword.getText().toString();
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     public void onResponse(String response) {
@@ -45,6 +47,7 @@ public class LoginPage extends AppCompatActivity{
                                 Intent intent = new Intent(LoginPage.this, MainActivity.class);
                                 boolean fb = false;
                                 intent.putExtra("fb", false);
+                                User user = new User(username, password);
                                 LoginPage.this.startActivity(intent);
                             } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginPage.this);

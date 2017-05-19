@@ -3,6 +3,7 @@ package com.example.airuser.soyf10;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -13,12 +14,16 @@ import android.widget.TextView;
 import android.content.Context;
 
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.facebook.*;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareButton;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView4;//Calorie
     private ShareButton fbShare;
     private Profile profile;
+    int steperino = 0;
     public boolean fbLogged;
 
     SharedPreferences.Editor editor;
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         ShareLinkContent content = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse("http://cecs492.weebly.com/"))
                 .setContentDescription("Step On Your Friends")
-                .setContentTitle("I've take a total of " + total +" steps since i downloaded the app.")
+                .setContentTitle("I've take a total of " + total +" steps since I downloaded the app.")
                 .build();
         fbShare.setShareContent(content);
 
@@ -107,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         textView.setText("Total steps: " + total +" Daily steps: " + daily);
+
         final Handler mHandler = new Handler();
         Runnable continuousRunnable = new Runnable(){
             public void run() {
@@ -119,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
             }
         };// Update text every second
         continuousRunnable.run();
+
+
+        getSteps();
 
     }
 
@@ -134,6 +144,36 @@ public class MainActivity extends AppCompatActivity {
         return fbLogged;
     }
 
+    private int getSteps()
+    {
+
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+
+
+                    if (success) {
+                        steperino = jsonResponse.getInt("steps");
+                        textView2.setText("Total steps: " + steperino);
+
+                    } else {
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        };
+
+        GetStepRequest request = new GetStepRequest("flip", responseListener);
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        queue.add(request);
+        return steperino;
+    }
 
 
 
